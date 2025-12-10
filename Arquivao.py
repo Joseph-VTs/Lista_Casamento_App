@@ -86,49 +86,48 @@ def Creat_Cad():
         Limpar_Terminal()
         print("-1 para retornar ao Menu")
         
+        # Campo Ele
         while True:
             Ele = Ent_Nomes("Digite", "Ele").strip()
-            
             if Ele == "-1":
                 print("Saindo...")
                 return
-            
-            # Aceita Vazio ou Nome Válido
-            if Ele == "" or Ele: 
+            if Ele == "" or Ele:
                 break
-            
-            print(f"{Yellow}❗ Erro (Campo Ele), Verifique... 🙃{Reset}")
-            
+            print("❗ Erro (Campo Ele), Verifique... 🙃")
+        
+        # Campo Ela
         while True:
-            Ela = Ent_Nomes("Digite", "Ele").strip()
-            
+            Ela = Ent_Nomes("Digite", "Ela").strip()
             if Ela == "-1":
                 print("Saindo...")
                 return
-            
-            # Aceita Vazio ou Nome Válido
-            if Ela == "" or Ela: 
+            if Ela == "" or Ela:
                 break
-            
-            print(f"{Yellow}❗ Erro (Campo Ela), Verifique... 🙃{Reset}")
-            
+            print("❗ Erro (Campo Ela), Verifique... 🙃")
+        
+        # Pelo menos um campo precisa estar preenchido
+        if not Ele.strip() and not Ela.strip():
+            print("❗ Pelo menos um dos campos deve ser preenchido.")
+            continue
+        
+        # Campo Filhos
         while True:
+            Filhos = input("Quant. Filhos: ").strip()
+            if Filhos == "-1":
+                print("Saindo...")
+                return
             try:
-                Filhos = int(input("Quant. Filhos: "))
-                
-                if Filhos == "-1":
-                    print("Saindo...")
-                    return
-                
+                Filhos = int(Filhos)
                 if Filhos < 0:
-                    print(f"{Yellow}❗ Filhos não podem ser Negativos. Verifique... 🙃{Reset}")
+                    print("❗ Filhos não podem ser Negativos. Verifique... 🙃")
                     continue
-                
-                break # Válido
+                break  # válido
             except ValueError:
                 print("Erro (Filhos) -> Digite apenas números inteiros")
-                
-        # Salva na Lista
+                continue
+        
+        # Salva na lista
         Def_Init(Ele, Ela, Filhos)
         print(f"{Green}✅ Convidado salvo com sucesso!{Reset}")
         print(f"{Black}-{Reset}" * 71)
@@ -279,6 +278,11 @@ def Update():
         try:
             Filhos = input("Nova quantidade de Filhos (ENTER mantém): ")
             Filhos = int(Filhos) if Filhos.strip() else Filhos_Atual
+            
+            if Filhos < 0:
+                print(f"{Yellow}❗ Filhos não podem ser Negativos. Mantendo valor antigo.{Reset}")
+                Filhos = Filhos_Atual
+
         except ValueError:
             print(f"{Yellow}❗ Entrada inválida para Filhos, manteremos o valor atual.{Reset}")
             Filhos = Filhos_Atual
